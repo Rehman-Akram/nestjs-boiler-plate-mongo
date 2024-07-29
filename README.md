@@ -23,15 +23,6 @@ It has following modules
 2. Nestjs 10.3.2
 3. MongoDB 5.0.17 Community
 
-## APIs documentation 
-APIs swagger docuementaion is available at baseUrl + /api-docuementation
-e.g.
-if you are using localhost at port 3000, then this app backend will work at url: "https://localhost:3000"
-you can find apis documentation at "https://localhost:3000/api-documentation" 
-
-### Swagger documentation
-For swagger documentation, @nestjs/swagger plugin is used in nest-cli with suitable options.
-
 ## Running the app
 
 1. npm i
