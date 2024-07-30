@@ -7,6 +7,26 @@ import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import configurations from './config/configurations';
+import { SharedModule } from './shared/shared.module';
+import {
+  BadRequestExceptionFilter,
+  ConflictExceptionFilter,
+  NotFoundExceptionFilter,
+  PasswordMismatchExceptionFilter,
+  UnauthorizedExceptionFilter,
+} from './shared/exceptions';
+import { APP_FILTER } from '@nestjs/core';
+
+const globalFilters = [
+  ConflictExceptionFilter,
+  BadRequestExceptionFilter,
+  NotFoundExceptionFilter,
+  PasswordMismatchExceptionFilter,
+  UnauthorizedExceptionFilter,
+].map((filter) => ({
+  provide: APP_FILTER,
+  useClass: filter,
+}));
 
 @Module({
   imports: [
@@ -19,8 +39,8 @@ import configurations from './config/configurations';
     UsersModule,
     RolesModule,
     PermissionsModule,
+    SharedModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [...globalFilters],
 })
 export class AppModule {}
