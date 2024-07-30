@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 import { UserStatus } from '../enums/status.enum';
 import { UserGender } from '../enums/gender.enum';
@@ -48,6 +48,9 @@ export class User extends Document {
 
   @Prop({ default: false, required: true })
   phoneVerified: boolean;
+
+  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Role' }] })
+  roles: MongooseSchema.Types.ObjectId[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
