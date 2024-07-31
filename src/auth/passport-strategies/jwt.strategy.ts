@@ -6,7 +6,7 @@ import { TokenPayload } from '../auth.interface';
 import { ERRORS, JWT_SECRET } from '../../shared/constants/constants';
 import { NotFoundError, UnauthroizedError } from '../../shared/errors';
 import { UsersService } from '../../users/users.service';
-import { User } from 'src/users/schemas/user.schema';
+import { User } from '../../users/schemas/user.schema';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

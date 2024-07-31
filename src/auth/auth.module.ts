@@ -12,7 +12,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './passport-strategies/jwt.strategy';
 import { JwtAuthGuard } from './guards/jwt.guard';
 import { PermissionGuard } from './guards/permission.guard';
-import { PermissionsModule } from 'src/permissions/permissions.module';
+import { PermissionsModule } from '../permissions/permissions.module';
 
 @Module({
   imports: [

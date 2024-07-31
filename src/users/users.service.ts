@@ -3,10 +3,10 @@ import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserStatus } from './enums/status.enum';
-import { ERRORS } from 'src/shared/constants/constants';
-import { NotFoundError } from 'src/shared/errors';
-import { Role } from 'src/roles/schemas/role.schema';
-import { PermissionsService } from 'src/permissions/permissions.service';
+import { ERRORS } from '../shared/constants/constants';
+import { NotFoundError } from '../shared/errors';
+import { Role } from '../roles/schemas/role.schema';
+import { PermissionsService } from '../permissions/permissions.service';
 
 @Injectable()
 export class UsersService {
@@ -60,15 +60,18 @@ export class UsersService {
     isPasswordRequired?: boolean,
   ): Promise<User> {
     try {
-      return await this.userModel
+      const query = this.userModel
         .findOne({ email, status: UserStatus.ACTIVE })
         .populate({
           path: 'roles',
           populate: {
             path: 'permissions',
           },
-        })
-        .exec();
+        });
+      if (isPasswordRequired) {
+        query.select('+password');
+      }
+      return await query.exec();
     } catch (error) {
       Logger.error(
         `Error in findUserByEmail of user service where credentials: ${JSON.stringify(

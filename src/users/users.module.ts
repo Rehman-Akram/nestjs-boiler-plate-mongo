@@ -3,7 +3,7 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './schemas/user.schema';
-import { PermissionsModule } from 'src/permissions/permissions.module';
+import { PermissionsModule } from '../permissions/permissions.module';
 
 @Module({
   imports: [

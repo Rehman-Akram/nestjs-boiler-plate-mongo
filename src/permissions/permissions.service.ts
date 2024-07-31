@@ -4,7 +4,7 @@ import { PermissionKeys, PermissionLevel } from './permissions.enum';
 import { InjectModel } from '@nestjs/mongoose';
 import { Permission } from './schemas/permission.schema';
 import { Model } from 'mongoose';
-import { Role } from 'src/roles/schemas/role.schema';
+import { Role } from '../roles/schemas/role.schema';
 
 @Injectable()
 export class PermissionsService {

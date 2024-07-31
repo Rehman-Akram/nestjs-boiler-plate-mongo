@@ -1,12 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { v4 as uuidv4 } from 'uuid';
 
 @Schema({ timestamps: true })
 export class Role extends Document {
-  @Prop({ required: true, default: uuidv4 })
-  id: string;
-
   @Prop({ required: true, unique: true })
   name: string;
 
@@ -24,6 +20,9 @@ export class Role extends Document {
 
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User' }] })
   users: MongooseSchema.Types.ObjectId[];
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Permission' })
+  permission: MongooseSchema.Types.ObjectId;
 }
 
 export const RoleSchema = SchemaFactory.createForClass(Role);

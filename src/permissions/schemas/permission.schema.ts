@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { v4 as uuidv4 } from 'uuid';
 import { PermissionObject } from '../permission.interface';
 
 const defaultPermissionObject: PermissionObject = {
@@ -12,14 +11,29 @@ const defaultPermissionObject: PermissionObject = {
 
 @Schema({ timestamps: true })
 export class Permission extends Document {
-  @Prop({ required: true, default: uuidv4 })
-  id: string;
+  @Prop({
+    type: {
+      create: { type: Boolean },
+      read: { type: Boolean },
+      update: { type: Boolean },
+      delete: { type: Boolean },
+    },
+    required: true,
+    default: defaultPermissionObject,
+  })
+  userPermissions: PermissionObject;
 
-  @Prop({ required: true, default: defaultPermissionObject })
-  userPermissions: string;
-
-  @Prop({ required: true, default: defaultPermissionObject })
-  rolePermissions: string;
+  @Prop({
+    type: {
+      create: { type: Boolean },
+      read: { type: Boolean },
+      update: { type: Boolean },
+      delete: { type: Boolean },
+    },
+    required: true,
+    default: defaultPermissionObject,
+  })
+  rolePermissions: PermissionObject;
 
   @Prop({ required: true, default: false })
   isDeleted: boolean;

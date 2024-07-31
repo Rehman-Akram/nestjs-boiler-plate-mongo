@@ -7,7 +7,7 @@ import { ResponseFormatService } from '../shared/response-format.service';
 import { MESSAGES } from '../shared/constants/constants';
 import { UserWithToken } from './dto/user-with-token.dto';
 import { CurrentUser } from '../shared/decorators/current-user.decorator';
-import { User } from 'src/users/schemas/user.schema';
+import { User } from '../users/schemas/user.schema';
 
 @Controller('auth')
 export class AuthController {

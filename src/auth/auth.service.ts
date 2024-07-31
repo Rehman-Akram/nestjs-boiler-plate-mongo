@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, forwardRef } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
-import { JWT_SECRET, ERRORS } from 'src/shared/constants/constants';
+import { JWT_SECRET, ERRORS } from '../shared/constants/constants';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserWithToken } from './dto/user-with-token.dto';
 import { TokenPayload } from './auth.interface';
@@ -9,8 +9,8 @@ import * as jwt from 'jsonwebtoken';
 import { NotFoundError, PasswordMismatchError } from '../shared/errors';
 import { PermissionsService } from '../permissions/permissions.service';
 import { Utils } from '../shared/utils/utils';
-import { User } from 'src/users/schemas/user.schema';
-import { Role } from 'src/roles/schemas/role.schema';
+import { User } from '../users/schemas/user.schema';
+import { Role } from '../roles/schemas/role.schema';
 
 @Injectable()
 export class AuthService {

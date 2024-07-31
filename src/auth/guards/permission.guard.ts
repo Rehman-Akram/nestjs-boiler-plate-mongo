@@ -7,8 +7,8 @@ import {
 import { Reflector } from '@nestjs/core';
 import { ERRORS } from '../../shared/constants/constants';
 import { UnauthroizedError } from '../../shared/errors';
-import { PermissionsService } from 'src/permissions/permissions.service';
-import { Role } from 'src/roles/schemas/role.schema';
+import { PermissionsService } from '../../permissions/permissions.service';
+import { Role } from '../../roles/schemas/role.schema';
 
 @Injectable()
 export class PermissionGuard implements CanActivate {

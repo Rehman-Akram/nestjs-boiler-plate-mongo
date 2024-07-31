@@ -38,3 +38,9 @@ export const PERMISSIONS = {
   USERS: 'userPermissions',
   ROLES: 'rolePermissions',
 };
+
+export const DEFAULT_ROLES = {
+  SUPER_ADMIN: 'superAdmin',
+  ADMIN: 'admin',
+  USER: 'user',
+};
