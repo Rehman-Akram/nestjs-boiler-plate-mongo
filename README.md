@@ -4,11 +4,10 @@ Boiler plate for nest js with mongo db.
 It has following modules
 
 1. Auth module (JwtAuth Guard, Permission Guard)
-4. Permissions module (with rbac)
-5. Roles module
-6. Shared module (custom decorators, transformers, etc.)
+2. Permissions module (with rbac)
+3. Roles module
+6. Shared module (custom decorators, etc.)
 8. Users module
-10. Users-role module
 11. Seeders (users, roles, permissions)
 12. Passport jwt strategy
 13. Global exception handling
