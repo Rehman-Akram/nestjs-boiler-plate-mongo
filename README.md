@@ -27,11 +27,9 @@ It has following modules
 
 1. npm i
 2. create db and update env accordingly
-4. run seeders using package.json script
-
-$ npm run start 
-or
-$ npm run start:dev (watch mode)
+3. seed data using npm run seed (script in package.json)
+4. nest start
 
 ## Authentication
 For authentication JWT is used with passport strategy
+

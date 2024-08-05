@@ -40,11 +40,11 @@ export class PermissionGuard implements CanActivate {
       if (!requiredRoutePermissions) {
         return true;
       }
-      // if user and id in params are same then allow (this is that user can update his own record without any permission)
+      // if user and _id in params are same then allow (this is that user can update his own record without any permission)
       if (
         request.params &&
-        request.params.id &&
-        request.params.id === request.user.id
+        request.params._id &&
+        request.params._id === request.user._id
       ) {
         return true;
       }

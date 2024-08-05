@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-
 @Schema({ timestamps: true })
 export class Role extends Document {
   @Prop({ required: true, unique: true })
@@ -18,11 +17,11 @@ export class Role extends Document {
   @Prop({ type: Date })
   updatedAt: Date;
 
-  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'User' }] })
-  users: MongooseSchema.Types.ObjectId[];
+  @Prop({ type: [{ type: MongooseSchema.Types.String, ref: 'User' }] })
+  users: MongooseSchema.Types.String[];
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Permission' })
-  permission: MongooseSchema.Types.ObjectId;
+  @Prop({ type: MongooseSchema.Types.String, ref: 'Permission' })
+  permission: MongooseSchema.Types.String;
 }
 
 export const RoleSchema = SchemaFactory.createForClass(Role);

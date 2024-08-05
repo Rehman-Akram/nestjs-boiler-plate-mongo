@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Document, Schema as MongooseSchema, UpdateQuery } from 'mongoose';
 import { UserStatus } from '../enums/status.enum';
 import { UserGender } from '../enums/gender.enum';
+import { Utils } from '../../shared/utils/utils';
 
 @Schema({ timestamps: true })
 export class User extends Document {
@@ -42,11 +43,37 @@ export class User extends Document {
   @Prop({ default: false, required: true })
   phoneVerified: boolean;
 
-  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Role' }] })
-  roles: MongooseSchema.Types.ObjectId[];
+  @Prop({ type: [{ type: MongooseSchema.Types.String, ref: 'Role' }] })
+  roles: MongooseSchema.Types.String[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-//email small letters (pre-save)
-// password hash (pre-save, updateone)
+UserSchema.pre<User>('save', async function (next) {
+  // Convert email to lowercase
+  this.email = this.email.toLowerCase();
+
+  // Hash the password if it has been modified
+  if (this.isModified('password')) {
+    this.password = Utils.generateHash(this.password);
+  }
+  next();
+});
+
+UserSchema.pre('updateOne', async function (next) {
+  const update = this.getUpdate() as UpdateQuery<User>;
+  if (update.password) {
+    update.password = Utils.generateHash(update.password);
+    this.setUpdate(update);
+  }
+  next();
+});
+
+UserSchema.pre('findOneAndUpdate', async function (next) {
+  const update = this.getUpdate() as UpdateQuery<User>;
+  if (update.password) {
+    update.password = Utils.generateHash(update.password);
+    this.setUpdate(update);
+  }
+  next();
+});

@@ -16,25 +16,28 @@ export class UsersService {
   ) {}
 
   /**
-   * This function is used to find user by means of id which is not active
+   * This function is used to find user by means of _id which is not active
    *
-   * @param id
+   * @param _id
    * @returns user | null
    */
-  async findOneById(id: string): Promise<User | null> {
+  async findOneById(_id: string): Promise<User | null> {
     try {
-      const user = await this.userModel
-        .findOne({
-          id: id,
-          status: UserStatus.ACTIVE,
-        })
-        .populate({
-          path: 'roles',
-          populate: {
-            path: 'permissions',
-          },
-        })
-        .exec();
+      const user = (
+        await this.userModel
+          .findOne({
+            _id,
+            status: UserStatus.ACTIVE,
+          })
+          .populate({
+            path: 'roles',
+            populate: {
+              path: 'permission',
+            },
+          })
+          .exec()
+      ).toObject();
+
       if (!user) {
         throw new NotFoundError(ERRORS.USER_NOT_FOUND);
       }
@@ -43,7 +46,7 @@ export class UsersService {
       user['permissions'] = this.permissionService.mergePermissions(userRoles);
       return user;
     } catch (error) {
-      Logger.error(`Error in findOneById of user service where id: ${id}`);
+      Logger.error(`Error in findOneById of user service where _id: ${_id}`);
       throw error;
     }
   }
@@ -65,13 +68,14 @@ export class UsersService {
         .populate({
           path: 'roles',
           populate: {
-            path: 'permissions',
+            path: 'permission',
           },
         });
       if (isPasswordRequired) {
         query.select('+password');
       }
-      return await query.exec();
+      const user = (await query.exec()).toObject();
+      return user;
     } catch (error) {
       Logger.error(
         `Error in findUserByEmail of user service where credentials: ${JSON.stringify(

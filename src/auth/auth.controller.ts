@@ -1,10 +1,10 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, SetMetadata } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from '../shared/decorators/public.decorator';
 import { LoginUserDto } from './dto/login-user.dto';
 import { ResponseFormat } from '../shared/shared.interface';
 import { ResponseFormatService } from '../shared/response-format.service';
-import { MESSAGES } from '../shared/constants/constants';
+import { MESSAGES, PERMISSIONS } from '../shared/constants/constants';
 import { UserWithToken } from './dto/user-with-token.dto';
 import { CurrentUser } from '../shared/decorators/current-user.decorator';
 import { User } from '../users/schemas/user.schema';
@@ -24,7 +24,7 @@ export class AuthController {
       MESSAGES.USER_LOGGED_IN_SUCCESSFULLY,
     );
   }
-
+  @SetMetadata('permissions', [{ [PERMISSIONS.ROLES]: { create: true } }])
   @Get('who-am-i')
   async whoAmI(
     @CurrentUser() currentUser: User,

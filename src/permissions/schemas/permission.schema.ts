@@ -44,8 +44,8 @@ export class Permission extends Document {
   @Prop({ type: Date })
   updatedAt: Date;
 
-  @Prop({ type: { type: MongooseSchema.Types.ObjectId, ref: 'Role' } })
-  role: MongooseSchema.Types.ObjectId;
+  @Prop({ type: { type: MongooseSchema.Types.String, ref: 'Role' } })
+  role: MongooseSchema.Types.String;
 }
 
 export const PermissionSchema = SchemaFactory.createForClass(Permission);

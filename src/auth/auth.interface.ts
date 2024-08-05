@@ -1,7 +1,7 @@
 import { PermissionObject } from '../permissions/permission.interface';
 
 export interface TokenPayload {
-  id: string;
+  _id: string;
 }
 
 export interface UserPermission {

@@ -13,7 +13,10 @@ import {
   PasswordMismatchExceptionFilter,
   UnauthorizedExceptionFilter,
 } from './shared/exceptions';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { AuthModule } from './auth/auth.module';
+import { JwtAuthGuard } from './auth/guards/jwt.guard';
+import { PermissionGuard } from './auth/guards/permission.guard';
 
 const globalFilters = [
   ConflictExceptionFilter,
@@ -34,11 +37,22 @@ const globalFilters = [
       load: [configurations],
       cache: true,
     }),
+    AuthModule,
     UsersModule,
     RolesModule,
     PermissionsModule,
     SharedModule,
   ],
-  providers: [...globalFilters],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: PermissionGuard,
+    },
+    ...globalFilters,
+  ],
 })
 export class AppModule {}

@@ -27,7 +27,7 @@ export class PermissionsService {
         permissions,
       ) as unknown as Permission;
       const permissionInstance = new this.permissionModel(permissionObject);
-      return await permissionInstance.save();
+      return (await permissionInstance.save()).toObject();
     } catch (error) {
       Logger.error(
         `Error in create of PermissionsService where permission: ${JSON.stringify(permissions)}`,
@@ -54,7 +54,7 @@ export class PermissionsService {
         permissions,
       ) as unknown as Permission;
       await this.permissionModel.updateOne(options, newPermissionsObject);
-      return this.permissionModel.findOne(options).exec();
+      return (await this.permissionModel.findOne(options).exec()).toObject();
     } catch (error) {
       Logger.error(
         `Error in update of PermissionsService where options: ${JSON.stringify(
@@ -232,7 +232,7 @@ export class PermissionsService {
       const rolePermissions = this.mergeRolePermissions(roles);
       const mergePermissionObject =
         this.mergePermissionObjects(rolePermissions);
-      delete mergePermissionObject['id'];
+      delete mergePermissionObject['_id'];
       return mergePermissionObject;
     } catch (error) {
       Logger.error(

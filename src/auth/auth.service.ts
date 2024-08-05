@@ -103,7 +103,7 @@ export class AuthService {
     try {
       // get user loggedIn
       const token = this.generateToken(
-        { id: user.id },
+        { _id: user._id as string },
         parseInt(this.configService.get<string>('ACCESS_TOKEN_EXPIRY_TIME')),
       );
       // add user permissions to user object

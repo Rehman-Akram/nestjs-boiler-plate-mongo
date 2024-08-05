@@ -31,11 +31,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: TokenPayload): Promise<User> {
     try {
-      const { id } = payload;
-      if (!id) {
+      const { _id } = payload;
+      if (!_id) {
         throw new UnauthroizedError(ERRORS.INVALID_TOKEN);
       }
-      const user = await this.userService.findOneById(id);
+      const user = await this.userService.findOneById(_id);
       if (!user) {
         throw new NotFoundError(ERRORS.INVALID_TOKEN);
       }

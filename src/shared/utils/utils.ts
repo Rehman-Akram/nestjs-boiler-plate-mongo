@@ -27,4 +27,31 @@ export class Utils {
   ): boolean {
     return bcrypt.compareSync(passwordInput, userPassword);
   }
+
+  /**
+   * Function to convert mongoose object to javascript object and replace _id with id at all levels
+   *
+   * @param obj
+   * @returns
+   */
+  public static convertToPlainObject(obj: any): any {
+    if (Array.isArray(obj)) {
+      return obj.map(this.convertToPlainObject);
+    } else if (obj && typeof obj === 'object') {
+      if (obj.toObject) {
+        obj = obj.toObject();
+      }
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          if (key === '_id') {
+            obj['id'] = this.convertToPlainObject(obj[key]);
+            delete obj['_id'];
+          } else {
+            obj[key] = this.convertToPlainObject(obj[key]);
+          }
+        }
+      }
+    }
+    return obj;
+  }
 }
